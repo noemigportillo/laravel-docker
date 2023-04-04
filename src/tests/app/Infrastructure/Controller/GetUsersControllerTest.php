@@ -35,4 +35,26 @@ class GetUsersControllerTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
         $response->assertExactJson([]);
     }
+
+    /**
+     * @test
+     */
+    public function thereAreUsers()
+    {
+        $this->userDataSource
+            ->expects('getAll')
+            ->with()
+            ->andReturn([
+                ['id' => '1', 'email' => 'email@email.com'],
+                ['id' => '2', 'email' => 'otro_email@gmail.com'],
+            ]);
+
+        $response = $this->get('/api/users');
+
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertExactJson([
+                ['id' => '1', 'email' => 'email@email.com'],
+                ['id' => '2', 'email' => 'otro_email@gmail.com'],
+        ]);
+    }
 }

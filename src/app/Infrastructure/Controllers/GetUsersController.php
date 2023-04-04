@@ -24,7 +24,6 @@ class GetUsersController extends BaseController
     public function __invoke(): JsonResponse
     {
         $users = $this->userDataSource->getAll();
-        return response()->json([
-        ], Response::HTTP_OK);
+        return response()->json($users, Response::HTTP_OK);
     }
 }
